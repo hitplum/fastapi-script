@@ -3,10 +3,10 @@ import re
 import os
 import sys
 import argparse
-import asyncio
 from types import MethodType
 from collections import OrderedDict
 
+from .defaults import GenCommand, RunServerCommand
 from .commands import Option, Command, add_help
 
 
@@ -88,6 +88,12 @@ class Manager(object):
         self.add_command(func.__name__, command)
         return func
 
+    def add_default_commands(self):
+        if "runserver" not in self._commands:
+            self.add_command("runserver", RunServerCommand())
+        if 'gencommand' not in self._commands:
+            self.add_command("gencommand", GenCommand())
+
     async def _patch_argparser(self, parser):
 
         async def _parser_known_args(self, arg_strings, *args, **kwargs):
@@ -129,6 +135,7 @@ class Manager(object):
         return parser
 
     async def handle(self, prog, args=None):
+        self.add_default_commands()
         app_parser = await self.create_parser(prog)
         args = list(args or [])
         app_namespace, remaining_args = app_parser.parse_known_args(args)
@@ -152,7 +159,7 @@ class Manager(object):
             if handle is last_stack and getattr(last_stack, 'capture_all_args', False):
                 args.append(remaining_args)
             try:
-                res = await handle(*args, **config)
+                res = await handle(self.app, *args, **config)
             except TypeError as err:
                 err.args = (f"{handle}: {str(err)}", )
                 raise
@@ -187,7 +194,3 @@ class Manager(object):
         for handler in self.app.router.on_shutdown:
             if handler.__name__ == 'close_orm':
                 await handler()
-
-if __name__ == '__main__':
-    manager = Manager()
-    asyncio.run(manager.run())
