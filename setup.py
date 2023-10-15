@@ -10,12 +10,13 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='fastapi-script',
-      version='0.0.5',
+      version='0.0.6',
       description='An extension for FastAPI',
       author='hitplum',
       author_email='ycx921101@163.com',
       url='https://github.com/hitplum/fastapi-script',
       packages=find_packages(),
+      include_package_data=True,
       long_description=long_description,
       long_description_content_type="text/markdown",
       license="MIT",
