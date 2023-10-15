@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='fastapi-script',
-      version='0.0.2',
+      version='0.0.3',
       description='An extension for FastAPI',
       author='hitplum',
       author_email='ycx921101@163.com',
