@@ -159,7 +159,7 @@ class Manager(object):
             if handle is last_stack and getattr(last_stack, 'capture_all_args', False):
                 args.append(remaining_args)
             try:
-                res = await handle(self.app, *args, **config)
+                res = await handle(*args, **config)
             except TypeError as err:
                 err.args = (f"{handle}: {str(err)}", )
                 raise

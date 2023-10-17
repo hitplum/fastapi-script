@@ -10,7 +10,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(name='fastapi-script',
-      version='0.0.7',
+      version='0.0.8',
       description='An extension for FastAPI',
       author='hitplum',
       author_email='ycx921101@163.com',
@@ -29,7 +29,10 @@ setup(name='fastapi-script',
           "Programming Language :: Python :: Implementation :: PyPy",
           "License :: OSI Approved :: MIT License"
       ],
-      python_requires='>=3.7'
+      python_requires='>=3.7',
+      install_requires=[
+          "fastapi",
+          "uvicorn"]
       )
 
 

@@ -1,2 +1,2 @@
-include LICENSE *.py
+include LICENSE
 recursive-include fastapi_script command.tmpl

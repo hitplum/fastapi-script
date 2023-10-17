@@ -60,7 +60,7 @@ class RunServerCommand(Command):
 
         return startup_file[:-3]
 
-    def run(self, app, *args, **kwargs):
+    def run(self,  *args, **kwargs):
         config = Config(app=f"{self.get_main_module()}:app", **kwargs)
         self.server = Server(config=config)
         if kwargs['reload']:
